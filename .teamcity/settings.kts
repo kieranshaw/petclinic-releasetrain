@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.BuildTypeSettings.Type.DEPLOYMENT
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 
 /*
@@ -27,13 +28,18 @@ version = "2019.2"
 
 project {
     buildType(DeployPreProd)
+    buildType(TestPreProd)
+    buildType(DeployProd)
+    buildType(TestProd)
+
 }
 
 object DeployPreProd : BuildType({
     name = "Deploy - PreProd"
+    artifactRules = "*.jar"
 
     enablePersonalBuilds = false
-    type = BuildTypeSettings.Type.DEPLOYMENT
+    type = DEPLOYMENT
     maxRunningBuilds = 1
 
     steps {
@@ -56,6 +62,62 @@ object DeployPreProd : BuildType({
         artifacts(AbsoluteId("SpringPetclinic_Build")) {
             cleanDestination = true
             artifactRules = "**/*.jar"
+        }
+    }
+})
+
+object TestPreProd : BuildType({
+    name = "Test - PreProd"
+
+    steps {
+        script {
+            scriptContent = "dir"
+        }
+    }
+
+    dependencies {
+        snapshot(DeployPreProd) {
+            synchronizeRevisions = true
+        }
+    }
+})
+
+object DeployProd : BuildType({
+    name = "Deploy - Prod"
+
+    enablePersonalBuilds = false
+    type = DEPLOYMENT
+    maxRunningBuilds = 1
+
+    steps {
+        script {
+            scriptContent = "dir"
+        }
+    }
+
+    dependencies {
+        snapshot(TestPreProd) {
+            synchronizeRevisions = true
+        }
+        artifacts(DeployPreProd) {
+            cleanDestination = true
+            artifactRules = "*.jar"
+        }
+    }
+})
+
+object TestProd : BuildType({
+    name = "Test - Prod"
+
+    steps {
+        script {
+            scriptContent = "dir"
+        }
+    }
+
+    dependencies {
+        snapshot(DeployProd) {
+            synchronizeRevisions = true
         }
     }
 })
