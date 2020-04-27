@@ -41,6 +41,10 @@ object DeployPreProd_1 : BuildType({
     maxRunningBuilds = 1
 
     dependencies {
+        artifacts(AbsoluteId("PetClinic_SpringPetclinic2_Build")) {
+            cleanDestination = true
+            artifactRules = "**/*.jar"
+        }
         artifacts(AbsoluteId("SpringPetclinic_Build")) {
             cleanDestination = true
             artifactRules = "**/*.jar"
