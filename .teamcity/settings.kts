@@ -25,15 +25,10 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2019.2"
 
 project {
-
-    buildType(DeployPreProd_1)
-
-    subProject(DeployUat)
-    subProject(DeployPreProd)
+    buildType(DeployPreProd)
 }
 
-object DeployPreProd_1 : BuildType({
-    id("DeployPreProd")
+object DeployPreProd : BuildType({
     name = "Deploy - PreProd"
 
     enablePersonalBuilds = false
@@ -56,14 +51,4 @@ object DeployPreProd_1 : BuildType({
             artifactRules = "**/*.jar"
         }
     }
-})
-
-
-object DeployPreProd : Project({
-    name = "Deploy - PreProd"
-})
-
-
-object DeployUat : Project({
-    name = "Deploy - UAT"
 })
