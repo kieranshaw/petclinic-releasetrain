@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -34,6 +35,12 @@ object DeployPreProd : BuildType({
     enablePersonalBuilds = false
     type = BuildTypeSettings.Type.DEPLOYMENT
     maxRunningBuilds = 1
+
+    steps {
+        script {
+            scriptContent = "dir"
+        }
+    }
 
     dependencies {
         snapshot(AbsoluteId("PetClinic_SpringPetclinic2_DeployTest")) {
