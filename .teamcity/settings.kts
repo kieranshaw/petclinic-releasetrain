@@ -25,4 +25,11 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2019.2"
 
 project {
+
+    subProject(DeployUat)
 }
+
+
+object DeployUat : Project({
+    name = "Deploy - UAT"
+})
