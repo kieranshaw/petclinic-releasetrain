@@ -27,7 +27,13 @@ version = "2019.2"
 project {
 
     subProject(DeployUat)
+    subProject(DeployPreProd)
 }
+
+
+object DeployPreProd : Project({
+    name = "Deploy - PreProd"
+})
 
 
 object DeployUat : Project({
