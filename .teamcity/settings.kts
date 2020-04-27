@@ -26,9 +26,20 @@ version = "2019.2"
 
 project {
 
+    buildType(DeployPreProd_1)
+
     subProject(DeployUat)
     subProject(DeployPreProd)
 }
+
+object DeployPreProd_1 : BuildType({
+    id("DeployPreProd")
+    name = "Deploy - PreProd"
+
+    enablePersonalBuilds = false
+    type = BuildTypeSettings.Type.DEPLOYMENT
+    maxRunningBuilds = 1
+})
 
 
 object DeployPreProd : Project({
