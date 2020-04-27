@@ -39,6 +39,13 @@ object DeployPreProd_1 : BuildType({
     enablePersonalBuilds = false
     type = BuildTypeSettings.Type.DEPLOYMENT
     maxRunningBuilds = 1
+
+    dependencies {
+        artifacts(AbsoluteId("SpringPetclinic_Build")) {
+            cleanDestination = true
+            artifactRules = "**/*.jar"
+        }
+    }
 })
 
 
