@@ -38,6 +38,7 @@ project {
 object DeployPreProd : BuildType({
     name = "Deploy - PreProd"
     artifactRules = "*.jar"
+    buildNumberPattern = "1.%build.counter%.0-RELEASE"
 
     enablePersonalBuilds = false
     type = DEPLOYMENT
@@ -69,6 +70,7 @@ object DeployPreProd : BuildType({
 
 object TestPreProd : BuildType({
     name = "Test - PreProd"
+    buildNumberPattern = "${DeployPreProd.depParamRefs["system.build.number"]}"
 
     steps {
         script {
@@ -91,6 +93,7 @@ object TestPreProd : BuildType({
 
 object DeployProd : BuildType({
     name = "Deploy - Prod"
+    buildNumberPattern = "${DeployPreProd.depParamRefs["system.build.number"]}"
 
     enablePersonalBuilds = false
     type = DEPLOYMENT
@@ -115,6 +118,7 @@ object DeployProd : BuildType({
 
 object TestProd : BuildType({
     name = "Test - Prod"
+    buildNumberPattern = "${DeployPreProd.depParamRefs["system.build.number"]}"
 
     steps {
         script {
