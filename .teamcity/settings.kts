@@ -1,6 +1,7 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.BuildTypeSettings.Type.DEPLOYMENT
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.finishBuildTrigger
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -75,6 +76,12 @@ object TestPreProd : BuildType({
         }
     }
 
+    triggers {
+        finishBuildTrigger {
+            buildType = "${DeployPreProd.id}"
+        }
+    }
+
     dependencies {
         snapshot(DeployPreProd) {
             synchronizeRevisions = true
@@ -112,6 +119,12 @@ object TestProd : BuildType({
     steps {
         script {
             scriptContent = "dir"
+        }
+    }
+
+    triggers {
+        finishBuildTrigger {
+            buildType = "${DeployProd.id}"
         }
     }
 
